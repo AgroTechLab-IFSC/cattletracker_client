@@ -1,0 +1,33 @@
+@baseUrl = https://agrotechlab.lages.ifsc.edu.br:8080
+@authToken = ExempoTokenExempoTokenExempoTokenExempoTokenExempoTokenExempoToken
+
+# Get JWT token. funciona, mas JAMAIAS SE DEVE DAR UM COMMIT COM A SENHA EXPLICITA NO CODIGO
+POST {{baseUrl}}/api/auth/login
+Accept: application/json
+Content-Type: application/json
+
+{
+	"username": "email@example.com",
+	"password": "XXXXXXXXXXXXXXXXXXXXXXXXXXX"
+}
+
+###
+
+# getDeviceTypes. Funciona 100%
+GET {{baseUrl}}/api/device/types
+Accept: */*
+X-Authorization: Bearer {{authToken}}
+
+###
+
+# getUsers. funciona, porém temos que bolar uma ideia de como colocar argumentos em variaveis
+GET {{baseUrl}}/api/users?pageSize=2&page=0  
+Accept: */*
+X-Authorization: Bearer {{authToken}}
+
+###
+
+# getTenantDashboards. não funciona e acaba retornando error de permissao 403 
+GET {{baseUrl}}/api/tenant/dashboards?pageSize=2&page=0
+Accept: */*
+X-Authorization: Bearer {{authToken}}
