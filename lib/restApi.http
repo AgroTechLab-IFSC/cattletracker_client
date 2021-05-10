@@ -1,3 +1,5 @@
+@dashboardId = 06ba1eb0-7d3d-11eb-8968-31bbd555ab9f
+
 # Get JWT token. funciona, mas JAMAIAS SE DEVE DAR UM COMMIT COM A SENHA EXPLICITA NO CODIGO
 POST {{baseUrl}}/api/auth/login
 Accept: application/json
@@ -26,5 +28,12 @@ X-Authorization: Bearer {{authToken}}
 
 # getTenantDashboards. não funciona e acaba retornando error de permissao 403 
 GET {{baseUrl}}/api/tenant/dashboards?pageSize=2&page=0
+Accept: */*
+X-Authorization: Bearer {{authToken}}
+
+###
+
+# getCustomerDashboards. funcionou certinho pra dashboard de testes
+GET {{baseUrl}}/api/dashboard/{{dashboardId}}
 Accept: */*
 X-Authorization: Bearer {{authToken}}
