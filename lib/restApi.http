@@ -1,14 +1,11 @@
-@baseUrl = https://agrotechlab.lages.ifsc.edu.br:8080
-@authToken = ExempoTokenExempoTokenExempoTokenExempoTokenExempoTokenExempoToken
-
 # Get JWT token. funciona, mas JAMAIAS SE DEVE DAR UM COMMIT COM A SENHA EXPLICITA NO CODIGO
 POST {{baseUrl}}/api/auth/login
 Accept: application/json
 Content-Type: application/json
 
 {
-	"username": "email@example.com",
-	"password": "XXXXXXXXXXXXXXXXXXXXXXXXXXX"
+	"username": "{{username}}",
+	"password": "{{password}}"
 }
 
 ###
