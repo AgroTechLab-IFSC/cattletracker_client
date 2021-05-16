@@ -49,8 +49,9 @@ class _HomePageState extends State<HomePage> {
           ..width = '640'
           ..height = '360'
           ..src =
-              'https://demo.thingsboard.io/dashboard/6e9f7550-4c2f-11eb-85f1-89bdf3965cf4?publicId=cd275350-ab97-11eb-83ac-bf5e0e990b9e'
-          ..style.border = 'none');
+              'https://agrotechlab.lages.ifsc.edu.br:8080/dashboard/06ba1eb0-7d3d-11eb-8968-31bbd555ab9f'
+          ..style.border =
+              'none'); //https://demo.thingsboard.io/dashboard/6e9f7550-4c2f-11eb-85f1-89bdf3965cf4?publicId=cd275350-ab97-11eb-83ac-bf5e0e990b9e
 
     return new Container(
       alignment: Alignment.center,
