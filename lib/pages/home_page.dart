@@ -20,21 +20,6 @@ class _HomePageState extends State<HomePage> {
           actions: <Widget>[
             Row(
               mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 5.0, 0),
-                  child: Icon(Icons.power_settings_new),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushReplacementNamed('/login');
-                  },
-                  child: Text(
-                    "Logout",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-              ],
             )
           ]),
       body: _uiSetup(),
@@ -42,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _uiSetup() {
-// ignore: undefined_prefixed_name
+    // ignore: undefined_prefixed_name
     ui.platformViewRegistry.registerViewFactory(
         'hello-html',
         (int viewId) => IFrameElement()
@@ -50,8 +35,7 @@ class _HomePageState extends State<HomePage> {
           ..height = '360'
           ..src =
               'https://agrotechlab.lages.ifsc.edu.br:8080/dashboard/06ba1eb0-7d3d-11eb-8968-31bbd555ab9f'
-          ..style.border =
-              'none'); //https://demo.thingsboard.io/dashboard/6e9f7550-4c2f-11eb-85f1-89bdf3965cf4?publicId=cd275350-ab97-11eb-83ac-bf5e0e990b9e
+          ..style.border = 'none');
 
     return new Container(
       alignment: Alignment.center,
