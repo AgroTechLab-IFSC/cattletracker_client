@@ -1,8 +1,9 @@
+import 'package:cattletracker_client/pages/login_page.dart';
 import 'package:flutter/material.dart';
 
 import 'pages/home_page.dart';
 
-Widget _defaultHome = new HomePage();
+Widget _defaultHome = new LoginPage();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         // Set routes for using the Navigator.
         '/home': (BuildContext context) => new HomePage(),
+        '/login': (BuildContext context) => new LoginPage(),
       },
     );
   }
