@@ -8,6 +8,13 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _email = TextEditingController();
+  final _password = TextEditingController();
+
+  void attemptLogin() {
+    print('email = '+_email.text +", password = "+_password.text);
+  }
+
   Widget _buildEmailTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,6 +43,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
           height: 50.0,
           child: TextField(
+            controller: _email,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.black,
@@ -84,6 +92,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
           height: 50.0,
           child: TextField(
+            controller: _password,
             obscureText: true,
             style: TextStyle(
               color: Colors.black,
@@ -110,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () => print('Login Button Pressed'),
+        onPressed: () => attemptLogin(),
         padding: EdgeInsets.all(30.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
