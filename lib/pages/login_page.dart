@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
+import '../api/api_service.dart';
+import '../model/login_model.dart';
+import '../shared_service.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -10,9 +13,39 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _email = TextEditingController();
   final _password = TextEditingController();
+  LoginRequestModel loginRequestModel = new LoginRequestModel();
 
   void attemptLogin() {
-    print('email = '+_email.text +", password = "+_password.text);
+    //Error: Converting object to an encodable object failed: Instance of 'LoginRequestModel' at Object.throw_ [as throw] (errors.dart:236)
+    APIService apiService = new APIService();
+
+    apiService.login(loginRequestModel).then((value) {
+      if (value != null) {
+        if (value.token.isNotEmpty) {
+          SharedService.setLoginDetails(value);
+          Navigator.of(context).pushReplacementNamed('/home');
+        } else {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                  title: Text("Sign In Error"),
+                  content: Text("Invalid email or password."),
+                  actions: <Widget>[
+                    // ignore: deprecated_member_use
+                    FlatButton(
+                        child: Text("OK"),
+                        onPressed: () {
+                          _email.text = "";
+                          _password.text = "";
+                          Navigator.pop(context);
+                        })
+                  ]);
+            },
+          );
+        }
+      }
+    });
   }
 
   Widget _buildEmailTF() {
