@@ -9,7 +9,7 @@ class APIService {
     Uri urlLogin =
         Uri.parse("https://agrotechlab.lages.ifsc.edu.br:8080/api/auth/login");
 
-    final response = await http.post(urlLogin, body: jsonEncode(requestModel));
+    final response = await http.post(urlLogin, body: requestModel.toJson());
     return LoginResponseModel.fromJson(
       json.decode(response.body),
     );

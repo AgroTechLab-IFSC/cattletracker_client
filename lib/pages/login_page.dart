@@ -13,39 +13,53 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _email = TextEditingController();
   final _password = TextEditingController();
-  LoginRequestModel loginRequestModel = new LoginRequestModel();
+  GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
+
+  bool validateAndSave() {
+    FormState form = globalFormKey.currentState;
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
 
   void attemptLogin() {
-    //Error: Converting object to an encodable object failed: Instance of 'LoginRequestModel' at Object.throw_ [as throw] (errors.dart:236)
-    APIService apiService = new APIService();
+    LoginRequestModel loginRequestModel = new LoginRequestModel();
+    loginRequestModel.username = _email.text;
+    loginRequestModel.password = _password.text;
 
-    apiService.login(loginRequestModel).then((value) {
-      if (value != null) {
-        if (value.token.isNotEmpty) {
-          SharedService.setLoginDetails(value);
-          Navigator.of(context).pushReplacementNamed('/home');
-        } else {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                  title: Text("Sign In Error"),
-                  content: Text("Invalid email or password."),
-                  actions: <Widget>[
-                    // ignore: deprecated_member_use
-                    FlatButton(
-                        child: Text("OK"),
-                        onPressed: () {
-                          _email.text = "";
-                          _password.text = "";
-                          Navigator.pop(context);
-                        })
-                  ]);
-            },
-          );
+    if (validateAndSave()) {
+      APIService apiService = new APIService();
+
+      apiService.login(loginRequestModel).then((value) {
+        if (value != null) {
+          if (value.token.isNotEmpty) {
+            SharedService.setLoginDetails(value);
+            Navigator.of(context).pushReplacementNamed('/home');
+          } else {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                    title: Text("Sign In Error"),
+                    content: Text("Invalid email or password."),
+                    actions: <Widget>[
+                      // ignore: deprecated_member_use
+                      FlatButton(
+                          child: Text("OK"),
+                          onPressed: () {
+                            _email.text = "";
+                            _password.text = "";
+                            Navigator.pop(context);
+                          })
+                    ]);
+              },
+            );
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   Widget _buildEmailTF() {
@@ -75,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
             ],
           ),
           height: 50.0,
-          child: TextField(
+          child: TextFormField(
             controller: _email,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
@@ -124,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
             ],
           ),
           height: 50.0,
-          child: TextField(
+          child: TextFormField(
             controller: _password,
             obscureText: true,
             style: TextStyle(
@@ -206,26 +220,27 @@ class _LoginPageState extends State<LoginPage> {
                     horizontal: 40.0,
                     vertical: 120.0,
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Sign In',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'OpenSans',
-                          fontSize: 45.0,
-                          fontWeight: FontWeight.bold,
+                  child: Form(
+                    key: globalFormKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'Sign In',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'OpenSans',
+                            fontSize: 45.0,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 30.0),
-                      _buildEmailTF(),
-                      SizedBox(
-                        height: 30.0,
-                      ),
-                      _buildPasswordTF(),
-                      _buildLoginBtn(),
-                    ],
+                        SizedBox(height: 30.0),
+                        _buildEmailTF(),
+                        SizedBox(height: 30.0),
+                        _buildPasswordTF(),
+                        _buildLoginBtn(),
+                      ],
+                    ),
                   ),
                 ),
               )
