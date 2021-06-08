@@ -5,11 +5,16 @@ import '../model/login_model.dart';
 import '../model/user_model.dart';
 
 class APIService {
+  String token;
+
   Future<LoginResponseModel> login(LoginRequestModel requestModel) async {
     Uri urlLogin =
         Uri.parse("https://agrotechlab.lages.ifsc.edu.br:8080/api/auth/login");
 
-    final response = await http.post(urlLogin, body: requestModel.toJson());
+    final response = await http.post(urlLogin, body: jsonEncode(requestModel));
+
+    this.token = (json.decode(response.body))["token"];
+
     return LoginResponseModel.fromJson(
       json.decode(response.body),
     );
